@@ -6,37 +6,45 @@ using System.Threading.Tasks;
 
 namespace LXC_Assignment3
 {
-    public class Product
+    public abstract class Product
     {
+
+        public int ID { get; set; }
         public string Name { get; set; }
 
-        public int addEventualTax;
-
-        public int sugarPercentage;
-        public double Price { get; set; }
-
+        
         public int Size { get; set; }
 
         public int Sugar { get; set; }
 
-        public virtual void ShowInfo()
-        {
-            Console.WriteLine(Name + " " + Size + " costs " + Price + "kn.");
-        }
+        private double price;
 
-        public virtual void Use()
-        {
-
-        }
-
-        public virtual void AddTaxes(double tax)
-        {
-            if(Sugar > 12)
-            {
-                tax = 1.2;
-                Price *= tax;
+        // 50% extra taxation for products with more than 15g of sugar.
+        public int Price { 
+            get { 
+                if(Sugar > 15)
+                {
+                    return (int)(price * 1.5);
+                }
+                else
+                {
+                    return (int)price;
+                }
+            }
+            set { 
+                price = value; 
             }
         }
+        public abstract void ShowGeneralInfo();
+        
+        public abstract void AskForConfirmation();
+
+        public abstract void Use();
+        
+
+        
+
+        
       
     }
 }

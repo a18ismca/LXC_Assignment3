@@ -15,6 +15,6 @@ namespace LXC_Assignment3
 
         public void Purchase(int amount);
 
-        public void ShowAll();
+        public void ShowAll(List<Product> prods);
     }
 }
