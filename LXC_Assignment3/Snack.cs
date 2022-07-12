@@ -8,8 +8,8 @@ namespace LXC_Assignment3
 
         public override void AskForConfirmation()
         {
-            Console.WriteLine(Name + " contains " + Size + "g of delicious thing with a price of " + Price + ". The snack also includes " + Protein + " grams of protein per 100g. ");
-            Console.WriteLine("Are you sure you want to proceed buying this product? (Y/N)");
+            Console.WriteLine(Name + " contains " + Size + "g of delicious thing with a price of " + Price + " kn. The snack also includes " + Protein + " grams of protein per 100g. ");
+            Console.WriteLine("Are you sure you want to proceed buying this product? If yes, press 1. If no, press another key.");
         }
 
         public override void ShowGeneralInfo()

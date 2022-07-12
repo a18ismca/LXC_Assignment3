@@ -9,11 +9,11 @@ namespace LXC_Assignment3
     public interface IVending
     {
 
-        public void EndTransaction();
+        public bool EndTransaction(int amount);
 
         public void InsertMoney(int amount);
 
-        public void Purchase(int amount);
+        public void Purchase(int amount, int index);
 
         public void ShowAll(List<Product> prods);
     }

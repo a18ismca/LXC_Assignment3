@@ -17,24 +17,8 @@ namespace LXC_Assignment3
 
         public int Sugar { get; set; }
 
-        private double price;
-
-        // 50% extra taxation for products with more than 15g of sugar.
-        public int Price { 
-            get { 
-                if(Sugar > 15)
-                {
-                    return (int)(price * 1.5);
-                }
-                else
-                {
-                    return (int)price;
-                }
-            }
-            set { 
-                price = value; 
-            }
-        }
+       
+        public int Price { get; set; }
         public abstract void ShowGeneralInfo();
         
         public abstract void AskForConfirmation();

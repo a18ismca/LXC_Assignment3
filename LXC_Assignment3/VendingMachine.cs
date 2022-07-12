@@ -13,7 +13,7 @@ namespace LXC_Assignment3
 
         int userCash = 0;
 
-        bool cashInserted = false;
+        bool running = true;
 
         private readonly int[] cash = { 1000, 500, 200, 100, 50, 20, 10, 5, 1 };
 
@@ -44,56 +44,87 @@ namespace LXC_Assignment3
 
         }
 
-        public void EndTransaction()
+        public bool EndTransaction(int amount)
         {
+            Console.WriteLine("Here is your cashback. Have a nice day!");
+            for (int i = 0; i < cash.Length; i++)
+            {
 
+                if (amount >= cash[i])
+                {
+
+                    int coinDistribution = (int)amount / cash[i];
+
+                    amount %= (int)cash[i];
+
+                    // change =- coinArray[i];
+
+                    Console.WriteLine(cash[i] + " coins: " + coinDistribution);
+
+                }
+
+
+
+            }
+
+            return false;
         }
 
         public void Menu()
         {
-           
-
             
-                Console.WriteLine("Insert money. The following amounts can be inserted: 1000, 500, 200, 100, 50, 20, 10, 5, 1.");
-
+            Console.WriteLine("Insert money. The following amounts can be inserted (in kunas): 1000, 500, 200, 100, 50, 20, 10, 5, 1.");
+            Console.WriteLine("When money has been inserted, enter 0000 and then press ENTER in order to select a product. ");
+            Console.WriteLine("Bank: " + userCash + "kn.");
+            try
+            {
                 int amount = int.Parse(Console.ReadLine());
 
                 if (amount == 0000)
                 {
                     Console.Clear();
                     SelectProduct();
-                }
+                } 
 
-                if (cash.Contains(amount))
+                else if (cash.Contains(amount))
                 {
                     InsertMoney(amount);
                     Menu();
-                    Console.WriteLine("Press 0000 in order to select a product. ");
+                    
                 }
+
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("The amount of entered cash is not valid. Total cash: " + userCash);
-                    if (userCash > 0)
-                    {
-                         Console.WriteLine("Press 0000 in order to select a product. ");
-                    }
-                Menu();
+                   
+                    Console.WriteLine("The amount of entered cash is not valid.");
+                    Menu();
+
+                    
+                    
                 }
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter integers instead of letters");
+                Menu();
+            }
         }
 
         public void InsertMoney(int amount)
         {
             Console.Clear();
             userCash += amount;
-            Console.WriteLine("{0} added. Total cash: {1}", amount, userCash);
+            Console.WriteLine("{0} kunas added. ", amount);
         }
 
-        public void Purchase(int amount)
+        public void Purchase(int amount, int index)
         {
             userCash -= amount;
+            products[index].Use();
             Console.WriteLine("Purchase successful! Cash left: " + userCash);
-            Console.WriteLine("Press any key to continue. ");
+            Console.WriteLine("Press any key and then ENTER to continue. ");
             Console.Read();
             SelectProduct();
         }
@@ -102,13 +133,13 @@ namespace LXC_Assignment3
         {
              
             ShowAll(products);
-            Console.WriteLine("Select product by its ID. Cash left: " + userCash);
+            Console.WriteLine("Select product by entering its ID and then pressing ENTER.\nEnter 0000 in order to withdraw more money. \nCash left: " + userCash + "\nInput 13 in order to leave VM");
             try
             {
                 int input = int.Parse(Console.ReadLine());
 
-                for (int i = 0; i < products.Count; i++)
-                {
+
+                
                     switch (input)
                     {
                         case 1:
@@ -147,12 +178,25 @@ namespace LXC_Assignment3
                         case 12:
                             AskUserAboutDecision(11);
                             break;
-                        default:
-                            Console.WriteLine("You must choose between 1 and 12!!");
+                        case 13:
+                            EndTransaction(userCash);
                             break;
-                    }
+                        case 0000:
+                            Console.Clear();
+                            Menu();
+                            break;
+                        default:
+                        Console.Clear();
+                        SelectProduct();
+                        break;
+                    
+            
+              
+                
+                   
                 }
-            }
+                }
+            
             catch {
                 Console.Clear();
                 SelectProduct();
@@ -163,20 +207,28 @@ namespace LXC_Assignment3
         public void AskUserAboutDecision(int index)
         {
             Console.Clear();
-            products[index].AskForConfirmation();
-
-            int decision = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("\n");
-
-            if (decision == 1)
+            if (userCash > products[index].Price)
             {
-                Console.Clear();
-                Purchase(products[index].Price);
+                products[index].AskForConfirmation();
+
+                int decision = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("\n");
+
+                if (decision == 1)
+                {
+                    Console.Clear();
+                    Purchase(products[index].Price, index);
+                }
+                else
+                {
+                    Console.Clear();
+                    SelectProduct();
+                }
             }
             else
             {
-                Console.Clear();
+                Console.WriteLine("You dont have enough money!! Return to the bankomat.");
                 SelectProduct();
             }
         }
