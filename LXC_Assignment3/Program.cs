@@ -9,6 +9,7 @@ namespace LXC_Assignment3
             VendingMachine vm = new VendingMachine();
             vm.CreateList();
             vm.Menu();
+            
         }
     }
 }

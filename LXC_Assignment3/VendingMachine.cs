@@ -9,13 +9,13 @@ namespace LXC_Assignment3
 {
     public class VendingMachine : IVending
     {
-        List<Product> products = new List<Product>();
+        public List<Product> products = new List<Product>();
 
-        int userCash = 0;
+        public int userCash = 0;
 
         bool running = true;
 
-        private readonly int[] cash = { 1000, 500, 200, 100, 50, 20, 10, 5, 1 };
+        public readonly double[] cash = { 1000, 500, 200, 100, 50, 20, 10, 5, 1 };
 
         public List<Product> CreateList()
         {
@@ -25,13 +25,14 @@ namespace LXC_Assignment3
             products.Add(new Drink { ID = 2, Name = "Cockta Light", Price = 9, Sugar = 2, Size = 500, Kolhydrater = 0 });
             products.Add(new Drink { ID = 3, Name = "Sinalco Cola", Price = 7, Sugar = 13, Size = 330, Kolhydrater = 12 });
             products.Add(new Drink { ID = 4, Name = "Pepsi", Price = 12, Sugar = 16, Size = 500, Kolhydrater = 16 });
-
+            // 39
             // Meals
 
             products.Add(new Food { ID = 5, Name = "Korv Stroganoff", Price = 43, Size = 350, Sugar = 17, Kcal = 180 });
             products.Add(new Food { ID = 6, Name = "Burek sa sirom", Price = 10, Size = 300, Sugar = 5, Kcal = 220 });
             products.Add(new Food { ID = 7, Name = "Wienerschnitzel", Price = 99, Size = 550, Sugar = 11, Kcal = 190 });
             products.Add(new Food { ID = 8, Name = "Potatiskroketter", Price = 22, Size = 250, Sugar = 8, Kcal = 165 });
+            // 174
 
             // Snacks
 
@@ -39,6 +40,7 @@ namespace LXC_Assignment3
             products.Add(new Snack { ID = 10, Name = "OLW Ranch", Price = 17, Size = 275, Sugar = 16, Protein = 3 });
             products.Add(new Snack { ID = 11, Name = "Lindt Bar Orange", Price = 7, Size = 65, Sugar = 23, Protein = 2 });
             products.Add(new Snack { ID = 12, Name = "Haribo Happy Cola", Price = 13, Size = 225, Sugar = 26, Protein = 1 });
+            // 46
 
             return products.ToList();
 
@@ -53,7 +55,7 @@ namespace LXC_Assignment3
                 if (amount >= cash[i])
                 {
 
-                    int coinDistribution = (int)amount / cash[i];
+                    int coinDistribution = amount / (int)cash[i];
 
                     amount %= (int)cash[i];
 
@@ -119,7 +121,7 @@ namespace LXC_Assignment3
             Console.WriteLine("{0} kunas added. ", amount);
         }
 
-        public void Purchase(int amount, int index)
+        public int Purchase(int amount, int index)
         {
             userCash -= amount;
             products[index].Use();
@@ -127,7 +129,11 @@ namespace LXC_Assignment3
             Console.WriteLine("Press any key and then ENTER to continue. ");
             Console.Read();
             SelectProduct();
+            return amount;
         }
+
+       
+
 
         public void SelectProduct()
         {
@@ -219,6 +225,7 @@ namespace LXC_Assignment3
                 {
                     Console.Clear();
                     Purchase(products[index].Price, index);
+                    
                 }
                 else
                 {

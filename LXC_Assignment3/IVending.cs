@@ -13,7 +13,7 @@ namespace LXC_Assignment3
 
         public void InsertMoney(int amount);
 
-        public void Purchase(int amount, int index);
+        public int Purchase(int amount, int index);
 
         public void ShowAll(List<Product> prods);
     }
